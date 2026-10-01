@@ -572,3 +572,33 @@ document.addEventListener("visibilitychange",()=>{
 
 
 document.addEventListener("DOMContentLoaded",()=>{const b=document.getElementById("ctBgmToggle");if(b)b.remove();ctApplyMediaSeVolume();});
+
+// MONSTER DEV 1 — client-side acquisition prototype.
+// IMPORTANT: this does not alter dig_treasure or the point economy.
+const CT_MONSTERS=[
+  {id:"slime",name:"スライム",star:1,element:"💧 水",role:"バランス型",icon:"💧"},
+  {id:"golem",name:"ゴーレム",star:1,element:"🌿 自然",role:"タンク型",icon:"🪨"},
+  {id:"fire_lizard",name:"ファイアリザード",star:2,element:"🔥 火",role:"アタッカー",icon:"🦎"},
+  {id:"forest_spirit",name:"森の精霊",star:2,element:"🌿 自然",role:"サポート",icon:"🌱"},
+  {id:"mimic",name:"ミミック",star:3,element:"無属性",role:"レアアタッカー",icon:"📦"}
+];
+const CT_MONSTER_RATES={easy:.15,normal:.10,hard:.07};
+const CT_STAR_WEIGHTS={easy:[.90,.10,0],normal:[.50,.45,.05],hard:[.10,.65,.25]};
+function ctMonsterRollStar(){const w=CT_STAR_WEIGHTS[difficulty]||CT_STAR_WEIGHTS.easy,r=Math.random();return r<w[0]?1:r<w[0]+w[1]?2:3}
+function ctRollMonster(){if(Math.random()>Number(CT_MONSTER_RATES[difficulty]||0))return null;const star=ctMonsterRollStar(),pool=CT_MONSTERS.filter(m=>m.star===star);return pool[Math.floor(Math.random()*pool.length)]||null}
+function ctMonsterCollection(){try{return JSON.parse(localStorage.getItem("ct_monster_collection_dev")||"{}")||{}}catch{return {}}}
+function ctSaveMonster(m){const c=ctMonsterCollection();c[m.id]=(Number(c[m.id]||0)+1);localStorage.setItem("ct_monster_collection_dev",JSON.stringify(c));return c[m.id]}
+function ctShowMonster(m,count){const root=$("monsterGet");if(!root)return;$("monsterGetIcon").textContent=m.icon;$("monsterGetStars").textContent="★".repeat(m.star);$("monsterGetName").textContent=m.name+(count>1?` ×${count}`:"");$("monsterGetMeta").textContent=`${m.element}属性 ・ ${m.role}`;root.hidden=false;root.setAttribute("aria-hidden","false");ctAnalytics?.event("monster_get",{difficulty,monster_id:m.id,monster_star:m.star})}
+function ctCloseMonster(){const root=$("monsterGet");if(!root)return;root.hidden=true;root.setAttribute("aria-hidden","true")}
+document.addEventListener("click",e=>{if(e.target?.id==="monsterGetClose"||e.target?.classList?.contains("monster-get-backdrop"))ctCloseMonster()});
+
+// Hook only successful treasure opens. The original dig flow remains untouched.
+const ctOriginalPostBattleEvent=postBattleEvent;
+postBattleEvent=function(cellIndex,prize){
+  const result=ctOriginalPostBattleEvent(cellIndex,prize);
+  try{
+    const m=ctRollMonster();
+    if(m){const count=ctSaveMonster(m);setTimeout(()=>ctShowMonster(m,count),prize>0?2300:850)}
+  }catch(e){console.warn("monster prototype:",e)}
+  return result;
+};
