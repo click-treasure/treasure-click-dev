@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>管理画面 V59</title>
+  <link rel="stylesheet" href="admin.css?v=59.1-fixed">
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <small>ADMIN / TREASURE CLICK</small>
+      <h1>運営管理</h1>
+      <p>ポイント原資と交換申請を管理します。</p>
+    </div>
+    <a href="index.html">← ゲームへ</a>
+  </header>
+
+  <section id="gate" class="card">
+    <b>管理者権限を確認中…</b>
+    <p id="gateMsg">Googleログイン済みの管理者のみ利用できます。</p>
+  </section>
+
+  <section id="panel" hidden>
+    <section class="pool-section">
+      <div class="section-head">
+        <div>
+          <small>PRIZE POOL</small>
+          <h2>💰 ポイント原資</h2>
+          <p>ポイント原資とリアルタイム連動中 <span class="pool-live"><i></i> LIVE</span></p>
+        </div>
+        <button id="poolReload" class="dark-btn">更新</button>
+      </div>
+
+      <div class="pool-summary">
+        <div class="card pool-main">
+          <small>総ポイント原資</small>
+          <b id="poolTotal">—</b>
+          <span>初期原資</span>
+        </div>
+        <div class="card">
+          <small>未配置</small>
+          <b id="poolUnallocated">—</b>
+          <span>これから島へ配置</span>
+        </div>
+        <div class="card">
+          <small>配置中</small>
+          <b id="poolAllocated">—</b>
+          <span>島に配置中のポイント</span>
+        </div>
+        <div class="card">
+          <small>発掘済み</small>
+          <b id="poolDiscovered">—</b>
+          <span>ユーザーが獲得済み</span>
+        </div>
+      </div>
+
+      <div class="inventory card">
+        <div class="inventory-head">
+          <div>
+            <small>INVENTORY</small>
+            <h3>ポイント内訳</h3>
+          </div>
+          <span id="poolCount">—</span>
+        </div>
+        <div id="poolInventory" class="inventory-grid">
+          <div class="inventory-loading">読み込み中…</div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="sim-section">
+      <div class="section-head">
+        <div><small>BUSINESS SIMULATOR</small><h2>📊 収益シミュレーター</h2><p>入力値だけで計算します。Supabaseの認証・データには触れません。</p></div>
+      </div>
+      <div class="sim-inputs card">
+        <label>月間アクティブユーザー<input id="simMau" type="number" min="1" value="100"></label>
+        <label>1日平均タップ<input id="simTaps" type="number" min="0" value="30"></label>
+        <label>広告売上 / 人・月<input id="simAds" type="number" min="0" step="0.1" value="30"></label>
+        <label>アフィ売上 / 人・月<input id="simAffiliate" type="number" min="0" step="0.1" value="470"></label>
+        <label>目標還元 / 人・月<input id="simReward" type="number" min="0" step="1" value="300"></label>
+        <label>うち宝箱還元 / 人・月<input id="simTreasure" type="number" min="0" step="1" value="150"></label>
+        <label>運営コスト / 人・月<input id="simCost" type="number" min="0" step="0.1" value="30"></label>
+      </div>
+      <div class="sim-results">
+        <div class="card"><small>月間売上</small><b id="simRevenue">—</b></div>
+        <div class="card"><small>ユーザー還元総額</small><b id="simRewardsTotal">—</b></div>
+        <div class="card"><small>運営利益</small><b id="simProfit">—</b></div>
+        <div class="card"><small>利益率</small><b id="simMargin">—</b></div>
+        <div class="card"><small>損益分岐ARPU</small><b id="simBreakEven">—</b></div>
+        <div class="card"><small>宝箱1タップ期待値</small><b id="simTapEv">—</b></div>
+      </div>
+    </section>
+
+    <section class="redemption-section">
+      <div class="section-head redemption-head">
+        <div>
+          <small>REDEMPTION</small>
+          <h2>交換申請</h2>
+          <p>PayPay送金後に「支払済み」にしてください。</p>
+        </div>
+      </div>
+      <div class="summary">
+        <div class="card"><small>処理待ち</small><b id="pendingCount">—</b></div>
+        <div class="card"><small>支払済み</small><b id="paidCount">—</b></div>
+        <button id="reload">更新</button>
+      </div>
+      <div id="requests" class="requests"></div>
+    </section>
+  </section>
+
+  <div id="error" class="error" hidden></div>
+</main>
+<script src="admin.js?v=66"></script>
+</body>
+</html>

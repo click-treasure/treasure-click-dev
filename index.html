@@ -1,0 +1,203 @@
+<!doctype html><html lang="ja"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S7C8F83L5W"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-S7C8F83L5W');
+</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CLICK TREASURE｜宝箱を掘ってポイントを貯める無料Webゲーム</title><link rel="stylesheet" href="style.css?v=88-34">  <meta name="description" content="CLICK TREASUREは、宝箱を掘ってポイントを集める無料Webゲームです。毎日のログインやミッションを楽しみながらポイントを貯められます。現在β版テスト運用中。">
+</head><body>
+
+<div id="betaNotice" class="beta-banner" role="status">
+  <strong>🧪 β版・テスト運用中</strong>
+  <span>β期間中に獲得したポイントは正式リリース後も引き継がれます。交換機能は現在準備中です。</span>
+</div>
+<div id="fx"></div><div id="v41Jackpot" class="v41-jackpot" hidden>
+<div class="v41-blackout"></div><div class="v42-whiteflash"></div><div class="v42-golddot"></div><div class="v41-goldburst"></div>
+<div class="v41-jackpot-content"><div class="v41-jackpot-kicker">JACKPOT</div><div class="v41-jackpot-money"><strong>5,000</strong><small>P</small><em>獲得！</em></div><div class="v41-jackpot-sub">TREASURE FOUND</div></div><div id="v41Coins" class="v41-coins"></div>
+</div>
+<div id="jackpotOverlay" class="jackpot-overlay" aria-hidden="true"><div class="jackpot-rays"></div><div class="jackpot-card"><div id="jackpotLabel" class="jackpot-label">🔥 大当たり！！ 🔥</div><div class="jackpot-caption">当選金額</div><div class="jackpot-money"><span id="jackpotAmount">100</span><small>P</small></div><div id="jackpotBang" class="jackpot-bang">！！！</div></div></div>
+<audio id="audio10old" preload="auto" src="sounds/win_10.wav"></audio><audio id="audio100old" preload="auto" src="sounds/win_100.wav"></audio>
+<div id="accountPanel" class="account-panel"><div class="account-copy"><span class="eyebrow">ACCOUNT</span><b id="accountState">ゲストでプレイ中</b><small>Google連携で残高・獲得履歴を保存。交換にはGoogle連携が必要です。</small></div><div class="account-actions"><a id="adminShortcut" class="admin-shortcut" href="admin.html" hidden>⚙ 管理画面</a><button id="googleLoginBtn" class="google-btn">G&nbsp;&nbsp;Googleと連携</button></div></div>
+<main>
+<header class="v88-topbar">
+  <div class="v88-logo">
+    <div class="v88-logo-chest" aria-hidden="true"><i></i></div>
+    <div><strong>CLICK <span>TREASURE</span></strong><small>宝探しで楽しむ、新しいポイ活。</small></div>
+  </div>
+  <div class="header-nickname" id="headerNickname" title="現在のニックネーム">
+          <span class="header-nickname-label">👤 ニックネーム</span>
+          <strong class="header-nickname-value" id="headerNicknameValue">---</strong>
+        </div>
+  <div class="v88-wallet">
+    <div class="v88-coin" aria-hidden="true">P</div>
+<div class="v88-statcopy"><small>保有ポイント</small><b id="wallet">—P</b></div>
+    <button id="redeemBtn" type="button" class="v88-exchange" disabled>交換</button>
+    <div class="v88-hidden-progress" aria-hidden="true"><i id="redeemFill"></i><span id="redeemText">交換まで計算中…</span></div>
+  </div>
+  <div class="v88-energy">
+    <div class="v88-bolt" aria-hidden="true"></div>
+    <div class="v88-statcopy"><small>エネルギー</small><b id="energy">— / 20</b><em id="energyTimer">サーバー確認中</em></div>
+  </div>
+  <nav class="v88-shortcuts" aria-label="ホームメニュー">
+    <button type="button" data-v88-target="loginBonus"><i class="v88-gift"></i><span>ログボ</span></button>
+    <button type="button" data-v88-target="dailyMissions"><i class="v88-check"></i><span>ミッション</span></button>
+<button id="v88MenuToggle" type="button" aria-expanded="false" aria-controls="v88HeaderMenu"><i class="v88-menuicon"></i><span>メニュー</span></button>
+  </nav>
+</header>
+<div id="v88HeaderMenu" class="v88-header-menu" hidden>
+  <div class="v88-header-menu-grid">
+    <button type="button" data-v88-target="pointOffers"><span>🪙</span><b>ポイント大量GET！</b></button>
+    <button type="button" id="nicknameMenuBtn"><span>👤</span><b>ニックネーム変更</b></button>
+    <button type="button" id="ctSoundSettingsBtn"><span>🔊</span><b>サウンド設定</b></button>
+    <button type="button" data-v88-target="betaNotice"><span>🔔</span><b>お知らせ</b></button>
+    <a href="howto.html"><span>📖</span><b>遊び方</b></a>
+    <a href="terms.html"><span>📄</span><b>利用規約</b></a>
+    <a href="contact.html"><span>✉️</span><b>お問い合わせ</b></a>
+    <a href="operator.html"><span>⚙️</span><b>運営者情報</b></a>
+  </div>
+</div>
+
+<div class="v88-page-shell">
+<div class="v88-main-column">
+<section id="homeDashboard" class="home-dashboard">
+<div class="v88-legacy-stats" aria-hidden="true"><span id="wins">—</span><span id="progress">—</span></div>
+<section id="islandSelect" class="island-select"><div class="section-title"><div><span>PLAY</span><h2>宝探しに行こう</h2></div><p>エネルギーと残高は全島共通</p></div><div id="islandCards" class="island-cards"><p class="loading-islands">最新の島を取得中…</p><button id="goldenIslandCard" class="island-card golden locked" type="button"><span>🔒 SECRET</span><b>黄金島</b><small>すべての宝箱が100P以上確定</small><em id="goldenTicketBadge" class="status-badge">🎫 チケット 0枚</em></button></div></section>
+
+<section id="loginBonus" class="login-bonus-card"><div class="login-bonus-copy"><span>DAILY BONUS</span><b>🎁 ログインボーナス</b><small id="loginBonusText">今日のボーナスを確認中…</small></div><div class="login-bonus-side"><strong id="loginBonusReward">+—回</strong><button id="loginBonusClaim" type="button" disabled>受け取る</button></div><div class="login-streak" id="loginStreak"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i></div></section>
+<section id="dailyMissions" class="daily-missions-card"><div class="daily-missions-head"><div><span>DAILY MISSIONS</span><b>🎯 デイリーミッション</b><small>毎日0:00にリセット</small></div><strong id="dailyMissionSummary">0 / 3</strong></div><div id="dailyMissionList" class="daily-mission-list"><small>ミッションを読み込み中…</small></div><div class="daily-all-clear"><div><b>⭐ 全達成ボーナス</b><small>3つクリアで +5回</small></div><button id="dailyAllClaim" type="button" disabled>未達成</button></div></section>
+<section id="pointOffers" class="point-offers"><div class="section-title"><div><span>EARN</span><h2>ポイント大量GET！！</h2></div><p>条件達成でポイントGET</p></div><div class="offer-tabs" role="tablist" aria-label="ポイント大量GET！！カテゴリ"><button type="button" class="offer-tab active" data-offer-filter="all">おすすめ</button><button type="button" class="offer-tab" data-offer-filter="game">🎮 ゲーム</button><button type="button" class="offer-tab" data-offer-filter="register">✍️ 無料登録</button><button type="button" class="offer-tab" data-offer-filter="service">📱 サービス</button></div><div class="offer-list"><article class="offer-card" data-offer-category="game"><div class="offer-icon">🎮</div><div class="offer-copy"><div class="offer-meta"><span>ゲーム</span><em>準備中</em></div><b>ゲームを遊んでポイント</b><small>インストール後の条件達成などでポイントを獲得</small></div><strong>COMING<br>SOON</strong></article><article class="offer-card" data-offer-category="register"><div class="offer-icon">✍️</div><div class="offer-copy"><div class="offer-meta"><span>無料登録</span><em>準備中</em></div><b>無料登録でポイント</b><small>会員登録・無料体験などの案件を掲載予定</small></div><strong>COMING<br>SOON</strong></article><article class="offer-card" data-offer-category="service"><div class="offer-icon">📱</div><div class="offer-copy"><div class="offer-meta"><span>サービス</span><em>準備中</em></div><b>サービス利用でポイント</b><small>条件と獲得ポイントを確認して参加できます</small></div><strong>COMING<br>SOON</strong></article></div><div class="offer-note"><span>ℹ️</span><p><b>ポイント大量GET！！は現在準備中です</b><small>提携サービスの準備ができ次第、順次公開します。</small></p></div></section>
+<section class="home-menu">
+  <button id="redeemMenu" class="menu-card menu-card-button" type="button">
+    <span>💴</span>
+    <div><b>交換</b><small>1,000P → PayPay 100円分</small></div>
+    <i id="redeemMenuState">1,000P〜</i><i class="menu-arrow">▼</i>
+  </button>
+  <button id="historyMenu" class="menu-card menu-card-button" type="button">
+    <span>📜</span>
+    <div><b>獲得履歴</b><small>これまで獲得したポイントを確認</small></div>
+    <i class="menu-arrow">▼</i>
+  </button>
+</section>
+<section id="winHistoryPanel" class="compact-history-panel" hidden><div class="historyHead"><b>🎁 獲得履歴</b><button id="refresh" type="button">更新</button></div><div id="history">まだ獲得履歴はありません</div></section>
+<section id="redeemPanel" class="compact-history-panel" hidden><div class="compact-redeem-top"><div><b>💴 交換</b><small>1,000PでPayPay 100円分に交換できます</small></div><button id="compactRedeemBtn" type="button" class="compact-redeem-btn">交換申請する</button></div><div class="historyHead redeem-history-title"><b>交換履歴</b><button id="redeemHistoryRefresh" type="button">更新</button></div><div id="redeemHistory" class="redeem-history redeem-history-home"><small>履歴を読み込み中…</small></div></section>
+</section>
+<section class="identity dev-identity" hidden style="display:none !important;"><div><small>PLAYER</small><b id="player">ゲスト作成中…</b></div><div><small>SESSION</small><b id="session">接続中</b></div></section><div id="error" class="error" hidden></div><section class="ad"><!-- admax -->
+<script src="https://adm.shinobi.jp/s/87367a901842c04cb35344ce335b7de3"></script>
+<!-- admax --></section>
+<section id="game" hidden><div class="head"><div><span>EASY / SHARED ONLINE</span><h2>宝箱を選ぼう</h2></div><div class="live"><i></i><b>ONLINE</b><small id="remaining">—</small></div></div><div class="sea"><div class="island-bar"><button id="back">← 一覧</button><strong id="islandName">EASY</strong><div class="island-tools"><button id="debugNumbers" type="button">🔢 番号表示 OFF</button><span id="islandState" class="island-state">探索中</span></div></div><div id="map"></div></div><div id="message">好きな宝箱を選ぼう</div></section>
+
+</main>
+<footer class="site-footer" style="padding:24px 16px 36px;text-align:center;font-size:13px;">
+  <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px 18px;margin-bottom:10px;">
+    <a href="howto.html">遊び方</a>
+    <a href="terms.html">利用規約</a>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <a href="contact.html">お問い合わせ</a>
+    <a href="operator.html">運営者情報</a>
+  </nav>
+  <small>© 2026 CLICK TREASURE</small>
+</footer>
+
+<div id="overlay" hidden><div class="burst"></div><div class="win"><small>TREASURE FOUND</small><strong id="amount">10P</strong><p>サーバー残高に追加されました</p><button id="close">島に戻る</button></div></div>
+<div id="devPrizeTester" class="dev-prize-tester" hidden><button id="devToggle" class="dev-toggle" type="button">🧪 演出テスト</button><div id="devButtons" class="dev-buttons" hidden><button type="button" data-test-prize="1">10P</button><button type="button" data-test-prize="10">100P</button><button type="button" data-test-prize="100">1,000P</button><button type="button" data-test-prize="500">5,000P</button>
+<div class="dev-refill-row">
+  <button id="adminAddGoldenTicket" type="button">🎫 チケット +1</button>
+  <button id="adminAddEnergy" type="button">⚡ エネルギー +5</button>
+</div>
+<small id="adminRefillStatus">※上2つは管理者テスト用・実データに反映</small></div></div>
+<div id="redeemModal" class="redeem-modal" hidden><div class="redeem-dialog"><button id="redeemModalClose" class="redeem-x" type="button">×</button><span class="redeem-eyebrow">REDEEM</span><h2>1,000Pを交換</h2><p>1,000PをPayPay 100円分に交換します。受け取り先を入力してください。申請すると1,000Pが確保されます。</p><label>PayPay ID<input id="redeemDestination" type="text" maxlength="120" autocomplete="off" placeholder="例：あなたのPayPay ID"></label><small id="redeemNote">⚠ 入力したPayPay IDに100円分を送金します。IDに間違いがないか必ず確認してください。申請後は「処理待ち」になります。</small><button id="redeemSubmit" class="redeem-submit" type="button">1,000Pを交換する</button></div></div>
+<script src="./ct-analytics.js?v=1"></script>
+<script src="app.js?v=88-82"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("redeemDestination");
+  const submit = document.getElementById("redeemSubmit");
+  if (!input || !submit) return;
+
+  submit.addEventListener("click", (e) => {
+    if (submit.dataset.confirmed === "1") {
+      delete submit.dataset.confirmed;
+      return;
+    }
+    const id = input.value.trim();
+    if (!id) return;
+
+    const ok = confirm(
+      "交換申請の最終確認\n\n" +
+      "交換：1,000P → PayPay 100円分\n" +
+      "PayPay ID：" + id + "\n\n" +
+      "このPayPay IDで間違いありませんか？"
+    );
+    if (!ok) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      input.focus();
+      return;
+    }
+    submit.dataset.confirmed = "1";
+  }, true);
+});
+</script>
+<div id="exchangeBetaNotice" class="exchange-beta-notice" hidden>
+  <strong>🔒 交換機能は正式リリース準備中です</strong>
+  <span>PayPayへの交換は現在ご利用いただけません。</span>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("v88MenuToggle");
+  const headerMenu = document.getElementById("v88HeaderMenu");
+  const closeHeaderMenu = () => {
+    if (!headerMenu || !menuToggle) return;
+    headerMenu.hidden = true;
+    menuToggle.setAttribute("aria-expanded","false");
+  };
+  if (menuToggle && headerMenu) {
+    menuToggle.addEventListener("click", () => {
+      const willOpen = headerMenu.hidden;
+      headerMenu.hidden = !willOpen;
+      menuToggle.setAttribute("aria-expanded", String(willOpen));
+    });
+    document.addEventListener("click", (e) => {
+      if (!headerMenu.hidden && !headerMenu.contains(e.target) && !menuToggle.contains(e.target)) closeHeaderMenu();
+    });
+  }
+  document.querySelectorAll("[data-v88-target]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const el = document.getElementById(btn.dataset.v88Target);
+      if (el) el.scrollIntoView({behavior:"smooth", block:"start"}); closeHeaderMenu();
+    });
+  });
+  document.querySelectorAll("[data-v88-click]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const el = document.getElementById(btn.dataset.v88Click);
+      if (el) el.click(); closeHeaderMenu();
+    });
+  });
+});
+</script>
+
+
+<!-- admax interstitial -->
+
+<!-- /admax interstitial -->
+
+
+<div id="homeNicknameModal" class="ct-nickname-modal" hidden>
+  <div class="ct-nickname-backdrop" data-close-nickname></div>
+  <section class="ct-nickname-dialog" role="dialog" aria-modal="true" aria-labelledby="homeNicknameTitle">
+    <button type="button" class="ct-nickname-close" data-close-nickname aria-label="閉じる">×</button>
+    <div class="ct-nickname-icon">👤</div>
+    <h2 id="homeNicknameTitle">ニックネーム変更</h2>
+    <p>2〜12文字で入力してください</p>
+    <input id="homeNicknameInput" type="text" minlength="2" maxlength="12" autocomplete="off">
+    <div id="homeNicknameError" class="ct-nickname-error" aria-live="polite"></div>
+    <button id="homeNicknameSave" type="button" class="ct-nickname-save">変更する</button>
+  </section>
+</div>
+
+</body></html>

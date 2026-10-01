@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>宝島｜CLICK TREASURE</title>
+<link rel="stylesheet" href="island.css?v=88-47">
+</head>
+<body>
+<main class="island-page">
+  <header class="island-top">
+    <a class="back" href="index.html#islandSelect">← 島選択に戻る</a>
+    <div class="island-statusbar">
+      <div class="mini-stat"><span>保有ポイント</span><strong id="wallet">---P</strong></div>
+      <div class="mini-stat energy"><span>⚡ エネルギー</span><strong id="energy">-- / 20</strong><small id="energyTimer">読み込み中</small></div>
+    </div>
+    <div class="brand"><span class="brand-chest">▣</span><b>CLICK <em>TREASURE</em></b></div>
+  </header>
+
+  <section class="easy-hero" id="islandHero">
+    <div class="hero-shade"></div>
+    <div class="hero-copy">
+      <span class="eyebrow">TREASURE ISLAND</span>
+      <h1><span id="difficultyTitle">EASY島</span> <small id="generation">#—</small></h1>
+      <p id="islandSubtitle">南の楽園の小さな島</p>
+      <div class="chips">
+        <span>🏝️ 100マス</span>
+        <span id="hitRateChip">🎯 当たりやすさ ★★★</span>
+        <span id="rewardChip">💎 当たり報酬 ★☆☆</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="treasure-panel">
+    <div class="map-head">
+      <div>
+        <span class="map-kicker">TREASURE MAP</span>
+        <h2>🗺️ 宝箱マップ <small id="message">島データを読み込み中…</small></h2>
+      </div>
+      <div class="map-count">🧰 残り <strong id="remaining">--</strong> / 100マス</div>
+    </div>
+    <div class="battle-live" aria-live="polite">
+      <div class="battle-live-title"><span class="live-dot"></span><b>ONLINE 争奪戦</b><small>同じ島の宝箱は全プレイヤー共通</small></div>
+      <div id="battleFeed" class="battle-feed"><span>👀 他プレイヤーの発掘を監視中…</span></div>
+    </div>
+    <div class="chest-board loading" id="chestBoard" aria-label="100マス宝箱マップ"></div>
+    <div class="map-foot">
+      <div><b>この島の報酬</b><span id="rewardList">🪙 10P　🪙 100P　🌟 1,000P</span></div>
+      <div class="energy-preview"><b>⚡ エネルギー</b><strong id="energyBottom">-- / 20</strong></div>
+    </div>
+  </section>
+  <section class="ad island-ad" aria-label="広告">
+    <!-- admax -->
+    <script src="https://adm.shinobi.jp/s/87367a901842c04cb35344ce335b7de3"></script>
+    <!-- admax -->
+  </section>
+</main>
+
+
+
+<div id="nicknameModal" class="nickname-modal" hidden aria-hidden="true">
+  <div class="nickname-backdrop"></div>
+  <section class="nickname-card" role="dialog" aria-modal="true" aria-labelledby="nicknameTitle">
+    <div class="nickname-icon">🏴‍☠️</div>
+    <small>PLAYER NAME</small>
+    <h2 id="nicknameTitle">争奪戦で使う名前を決めよう</h2>
+    <p>他のプレイヤーにはこのニックネームだけが表示されます。</p>
+    <form id="nicknameForm">
+      <input id="nicknameInput" type="text" minlength="2" maxlength="12" autocomplete="off" placeholder="2〜12文字" aria-label="ニックネーム">
+      <div id="nicknameError" class="nickname-error" aria-live="polite"></div>
+      <button type="submit">この名前で参加する</button>
+    </form>
+  </section>
+</div>
+
+<div id="energyEmptyModal" class="energy-empty-modal" hidden aria-hidden="true">
+  <div class="energy-empty-backdrop"></div>
+  <section class="energy-empty-card" role="dialog" aria-modal="true" aria-labelledby="energyEmptyTitle">
+    <div class="energy-empty-icon">⚡</div>
+    <small>ENERGY EMPTY</small>
+    <h2 id="energyEmptyTitle">エネルギーを使い切りました！</h2>
+    <p>少し休んで、また宝探しに出発しよう。</p>
+    <div class="energy-empty-times">
+      <div><span>次の1回復まで</span><strong id="energyEmptyNext">--:--</strong></div>
+      <div><span>20 / 20 最大回復</span><strong id="energyEmptyFull">--:--</strong></div>
+    </div>
+    <div id="energyAdSlot" class="energy-ad-slot" aria-label="広告">
+      <small class="energy-ad-label">ADVERTISEMENT</small>
+      <!-- admax -->
+      <script src="https://adm.shinobi.jp/s/87367a901842c04cb35344ce335b7de3"></script>
+      <!-- admax -->
+    </div>
+    <button id="energyEmptyClose" type="button">閉じる</button>
+  </section>
+</div>
+
+<div id="fx"></div>
+<div id="v41Jackpot" class="v41-jackpot" hidden>
+  <div class="v41-blackout"></div><div class="v42-whiteflash"></div><div class="v42-golddot"></div><div class="v41-goldburst"></div>
+  <div class="v41-jackpot-content"><div class="v41-jackpot-kicker">JACKPOT</div><div class="v41-jackpot-money"><strong>5,000</strong><small>P</small><em>獲得！</em></div><div class="v41-jackpot-sub">TREASURE FOUND</div></div>
+  <div id="v41Coins" class="v41-coins"></div>
+</div>
+<div id="jackpotOverlay" class="jackpot-overlay" aria-hidden="true">
+  <div class="jackpot-rays"></div><div class="jackpot-card"><div id="jackpotLabel" class="jackpot-label">🔥 大当たり！！ 🔥</div><div class="jackpot-caption">当選ポイント</div><div class="jackpot-money"><span id="jackpotAmount">100</span><small>P</small></div><div id="jackpotBang" class="jackpot-bang">！！！</div></div>
+</div>
+<audio id="audio1old" preload="auto" src="sounds/win_1.wav"></audio>
+<audio id="audio10old" preload="auto" src="sounds/win_10.wav"></audio>
+<audio id="audio100old" preload="auto" src="sounds/win_100.wav"></audio>
+
+<div id="rewardToast" class="reward-toast" hidden>
+  <small>TREASURE GET!</small><strong id="rewardAmount">0P</strong>
+</div>
+<div id="ticketToast" class="ticket-toast" hidden>🎫 GOLDEN TICKET GET!</div>
+<div id="errorToast" class="error-toast" hidden></div>
+
+<script src="./ct-analytics.js?v=1"></script>
+<script src="island.js?v=88-48"></script>
+
+<!-- admax interstitial -->
+
+<!-- /admax interstitial -->
+
+</body>
+</html>
